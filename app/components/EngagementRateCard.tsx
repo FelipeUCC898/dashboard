@@ -1,9 +1,5 @@
 'use client';
 
-import { CSSProperties } from "react";
-import { scaleBand, scaleLinear } from "d3";
-import { AnimatedBar } from "./AnimatedBar";
-
 const data = [
   { key: "JAN", value: 2000 },
   { key: "FEB", value: 3500 },
@@ -14,14 +10,6 @@ const data = [
 ];
 
 export default function EngagementRateCard() {
-  const xScale = scaleBand()
-    .domain(data.map((d) => d.key))
-    .range([0, 100])
-    .padding(0.3);
-
-  const yScale = scaleLinear()
-    .domain([0, 5000])
-    .range([100, 0]);
 
   return (
     <div className="bg-white rounded-[20px] shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-5 w-full">
@@ -54,81 +42,68 @@ export default function EngagementRateCard() {
       </div>
 
       {/* Chart */}
-      <div
-        className="relative w-full h-[220px]"
-        style={{
-          "--marginTop": "25px",
-          "--marginRight": "8px",
-          "--marginBottom": "20px",
-          "--marginLeft": "30px",
-        } as CSSProperties}
-      >
-        <div className="absolute inset-0 z-10 h-[calc(100%-var(--marginTop)-var(--marginBottom))] w-[calc(100%-var(--marginLeft)-var(--marginRight))] translate-x-[var(--marginLeft)] translate-y-[var(--marginTop)]">
-          {data.map((d, index) => {
-            const barX = xScale(d.key)!;
-            const barWidth = xScale.bandwidth();
-            const barHeight = 100 - yScale(d.value);
-
-            return (
-              <AnimatedBar key={index} index={index}>
-                <div className="relative">
-                  <div
-                    style={{
-                      position: "absolute",
-                      left: `${barX}%`,
-                      bottom: "0",
-                      width: `${barWidth}%`,
-                      height: `${barHeight}%`,
-                      backgroundColor: d.active ? "#2D6A4F" : "#95D5B2",
-                      borderRadius: "999px 999px 0 0",
-                    }}
-                  />
-                  {d.active && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        left: `${barX + barWidth / 2}%`,
-                        bottom: `${barHeight + 2}%`,
-                        transform: "translateX(-50%)",
-                      }}
-                      className="bg-gray-900 text-white text-[10px] font-semibold px-2 py-0.5 rounded whitespace-nowrap"
-                    >
-                      +17.8%
-                    </div>
-                  )}
-                </div>
-              </AnimatedBar>
-            );
-          })}
-
-          <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            {yScale.ticks(6).map((tick, i) => (
-              <g key={i} transform={`translate(0,${yScale(tick)})`} className="text-gray-200">
-                <line x1={0} x2={100} stroke="currentColor" strokeDasharray="3,3" strokeWidth={0.5} vectorEffect="non-scaling-stroke"/>
-              </g>
-            ))}
-          </svg>
+      <div className="relative w-full h-[220px] mt-2">
+        {/* Y-axis labels */}
+        <div className="absolute left-0 top-0 bottom-6 w-8 flex flex-col justify-between text-[10px] text-gray-400">
+          <span>5k</span>
+          <span>4k</span>
+          <span>3k</span>
+          <span>2k</span>
+          <span>1k</span>
+          <span>0</span>
         </div>
 
-        <svg className="absolute inset-0 h-[calc(100%-var(--marginTop)-var(--marginBottom))] translate-y-[var(--marginTop)] overflow-visible">
-          <g className="translate-x-[-4px]">
-            {yScale.ticks(6).map((value, i) => (
-              <text key={i} x="0" y={`${yScale(value)}%`} dy=".35em" textAnchor="end" fill="currentColor" className="text-[10px] text-gray-400">
-                {value >= 1000 ? `${value / 1000}k` : value}
-              </text>
-            ))}
-          </g>
-        </svg>
+        {/* Chart area with bars */}
+        <div className="absolute left-10 right-0 top-0 bottom-6 flex items-end justify-around gap-2">
+          {data.map((month, index) => {
+            const heightPercent = (month.value / 5000) * 100;
+            return (
+              <div key={index} className="flex-1 flex flex-col justify-end items-center h-full relative">
+                {/* Tooltip for active bar */}
+                {month.active && (
+                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded whitespace-nowrap z-10">
+                    +17.8%
+                  </div>
+                )}
+                
+                {/* Bar */}
+                <div 
+                  className={`w-full rounded-t-full relative ${
+                    month.active ? 'bg-[#2D6A4F]' : 'bg-[#95D5B2]'
+                  }`}
+                  style={{ 
+                    height: `${heightPercent}%`,
+                    minHeight: '10px',
+                    backgroundImage: month.active 
+                      ? 'repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(0,0,0,0.1) 3px, rgba(0,0,0,0.1) 6px)'
+                      : 'repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,0.3) 3px, rgba(255,255,255,0.3) 6px)'
+                  }}
+                >
+                  {/* Dot indicator on active bar */}
+                  {month.active && (
+                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#2D6A4F] rounded-full border-2 border-white"></div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
-        <svg className="absolute inset-0 w-[calc(100%-var(--marginLeft)-var(--marginRight))] translate-x-[var(--marginLeft)] h-[calc(100%-var(--marginBottom))] translate-y-[var(--marginTop)] overflow-visible">
-          <g transform="translate(0,100)">
-            {data.map((entry, i) => (
-              <text key={i} x={`${xScale(entry.key)! + xScale.bandwidth() / 2}%`} y="0" dy="1em" textAnchor="middle" fill="currentColor" className="text-[10px] text-gray-400">
-                {entry.key}
-              </text>
-            ))}
-          </g>
-        </svg>
+        {/* Grid lines */}
+        <div className="absolute left-10 right-0 top-0 bottom-6 flex flex-col justify-between pointer-events-none">
+          {[0, 1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="w-full border-t border-dashed border-gray-200"></div>
+          ))}
+        </div>
+
+        {/* X-axis labels */}
+        <div className="absolute left-10 right-0 bottom-0 flex justify-around">
+          {data.map((month, index) => (
+            <span key={index} className="text-[10px] text-gray-400 flex-1 text-center">
+              {month.key}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );

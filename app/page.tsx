@@ -22,16 +22,16 @@ export default function Home() {
               <Hero />
             </div>
 
-            {/* Cards Grid Layout */}
-            <div className="grid grid-cols-3 gap-5 mb-5">
-              {/* Row 1 */}
+            {/* Cards Grid Layout - Custom proportions */}
+            <div className="grid grid-cols-[minmax(240px,280px)_minmax(380px,1fr)_minmax(260px,300px)] gap-5 mb-5">
+              {/* Row 1: Payment Goal (small) | Engagement Rate (large) | Total Balance (medium) */}
               <PaymentGoalCard />
               <EngagementRateCard />
               <TotalBalanceCard />
             </div>
 
-            <div className="grid grid-cols-3 gap-5">
-              {/* Row 2 */}
+            <div className="grid grid-cols-[minmax(240px,280px)_minmax(380px,1fr)_minmax(260px,300px)] gap-5">
+              {/* Row 2: Payment History (spans 2 cols) | Right column (Amount + Mandatory) */}
               <div className="col-span-2">
                 <PaymentHistoryCard />
               </div>
