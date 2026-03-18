@@ -3,8 +3,8 @@ export default function Hero() {
     <div className="flex items-center justify-between mb-8">
       {/* Welcome Title */}
       <h1 className="text-[32px] leading-tight">
-        <span className="font-light text-black">Welcome Back, </span>
-        <span className="font-bold text-black">Sujon</span>
+        <span className="font-bold text-black">Welcome Back, </span> 
+        <span className="font-light text-black">Sujon</span> 
       </h1>
 
       {/* Right Side Actions */}

@@ -14,14 +14,16 @@ export default function Home() {
       <Header />
       
       <main className="pt-[100px] px-8 pb-8">
+        {/* Hero Section - Aligned with cards */}
+        <div className="mb-6 pl-[90px]">
+          <Hero />
+        </div>
+
+        {/* Cards Section - With sidebar */}
         <div className="relative">
           <Sidebar />
           
           <div className="pl-[90px]">
-            <div className="mb-6">
-              <Hero />
-            </div>
-
             {/* Cards Grid Layout - Custom proportions */}
             <div className="grid grid-cols-[minmax(240px,280px)_minmax(380px,1fr)_minmax(260px,300px)] gap-5 mb-5">
               {/* Row 1: Payment Goal (small) | Engagement Rate (large) | Total Balance (medium) */}
