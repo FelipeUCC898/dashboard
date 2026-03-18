@@ -1,28 +1,44 @@
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Hero from './components/Hero';
+import PaymentGoalCard from './components/PaymentGoalCard';
+import EngagementRateCard from './components/EngagementRateCard';
+import TotalBalanceCard from './components/TotalBalanceCard';
+import AmountOfCreditCard from './components/AmountOfCreditCard';
+import MandatoryPaymentsCard from './components/MandatoryPaymentsCard';
+import PaymentHistoryCard from './components/PaymentHistoryCard';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#F2F2F2]">
       <Header />
       
-      <main className="pt-[100px] px-8">
-        {/* Content Area with Sidebar */}
+      <main className="pt-[100px] px-8 pb-8">
         <div className="relative">
           <Sidebar />
           
-          {/* Main Content Area */}
           <div className="pl-[90px]">
-            {/* Hero Section - Aligned with cards */}
             <div className="mb-6">
               <Hero />
             </div>
 
-            {/* Cards Grid */}
-            <div className="p-8 bg-white rounded-2xl">
-              <h2 className="text-xl font-semibold">Cards Content Area</h2>
-              <p className="text-gray-600 mt-2">Payment Goal, Engagement Rate, and other cards will go here</p>
+            {/* Cards Grid Layout */}
+            <div className="grid grid-cols-3 gap-5 mb-5">
+              {/* Row 1 */}
+              <PaymentGoalCard />
+              <EngagementRateCard />
+              <TotalBalanceCard />
+            </div>
+
+            <div className="grid grid-cols-3 gap-5">
+              {/* Row 2 */}
+              <div className="col-span-2">
+                <PaymentHistoryCard />
+              </div>
+              <div className="flex flex-col gap-5">
+                <AmountOfCreditCard />
+                <MandatoryPaymentsCard />
+              </div>
             </div>
           </div>
         </div>
