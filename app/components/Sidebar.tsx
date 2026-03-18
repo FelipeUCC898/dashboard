@@ -1,6 +1,6 @@
 export default function Sidebar() {
   return (
-    <aside className="fixed left-6 top-[100px] bottom-6 w-[60px] flex flex-col items-center gap-4 z-40">
+    <aside className="absolute left-0 top-0 bottom-0 w-[60px] flex flex-col items-center gap-4 z-40">
       {/* First Section - Top 4 Icons */}
       <div className="bg-white rounded-2xl shadow-sm flex flex-col items-center py-5 gap-5">
         {/* Active Grid Icon */}
