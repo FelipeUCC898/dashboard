@@ -42,9 +42,9 @@ export default function EngagementRateCard() {
       </div>
 
       {/* Chart */}
-      <div className="relative w-full h-[220px] mt-2">
+      <div className="relative w-full h-[200px] mt-3">
         {/* Y-axis labels */}
-        <div className="absolute left-0 top-0 bottom-6 w-8 flex flex-col justify-between text-[10px] text-gray-400">
+        <div className="absolute left-0 top-0 bottom-5 w-7 flex flex-col justify-between text-[10px] text-gray-400">
           <span>5k</span>
           <span>4k</span>
           <span>3k</span>
@@ -53,15 +53,22 @@ export default function EngagementRateCard() {
           <span>0</span>
         </div>
 
+        {/* Grid lines */}
+        <div className="absolute left-8 right-0 top-0 bottom-5 flex flex-col justify-between pointer-events-none">
+          {[0, 1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="w-full border-t border-dashed border-gray-200"></div>
+          ))}
+        </div>
+
         {/* Chart area with bars */}
-        <div className="absolute left-10 right-0 top-0 bottom-6 flex items-end justify-around gap-2">
+        <div className="absolute left-8 right-0 top-0 bottom-5 flex items-end justify-around gap-1.5">
           {data.map((month, index) => {
             const heightPercent = (month.value / 5000) * 100;
             return (
               <div key={index} className="flex-1 flex flex-col justify-end items-center h-full relative">
                 {/* Tooltip for active bar */}
                 {month.active && (
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded whitespace-nowrap z-10">
+                  <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-[#2D6A4F] text-white text-[10px] font-semibold px-2 py-0.5 rounded-md whitespace-nowrap z-10">
                     +17.8%
                   </div>
                 )}
@@ -73,15 +80,15 @@ export default function EngagementRateCard() {
                   }`}
                   style={{ 
                     height: `${heightPercent}%`,
-                    minHeight: '10px',
+                    minHeight: '15px',
                     backgroundImage: month.active 
-                      ? 'repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(0,0,0,0.1) 3px, rgba(0,0,0,0.1) 6px)'
-                      : 'repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,0.3) 3px, rgba(255,255,255,0.3) 6px)'
+                      ? 'repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(255,255,255,0.15) 4px, rgba(255,255,255,0.15) 8px)'
+                      : 'repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(255,255,255,0.4) 4px, rgba(255,255,255,0.4) 8px)'
                   }}
                 >
                   {/* Dot indicator on active bar */}
                   {month.active && (
-                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#2D6A4F] rounded-full border-2 border-white"></div>
+                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-[#2D6A4F] rounded-full border-2 border-white"></div>
                   )}
                 </div>
               </div>
@@ -89,15 +96,8 @@ export default function EngagementRateCard() {
           })}
         </div>
 
-        {/* Grid lines */}
-        <div className="absolute left-10 right-0 top-0 bottom-6 flex flex-col justify-between pointer-events-none">
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="w-full border-t border-dashed border-gray-200"></div>
-          ))}
-        </div>
-
         {/* X-axis labels */}
-        <div className="absolute left-10 right-0 bottom-0 flex justify-around">
+        <div className="absolute left-8 right-0 bottom-0 flex justify-around">
           {data.map((month, index) => (
             <span key={index} className="text-[10px] text-gray-400 flex-1 text-center">
               {month.key}
